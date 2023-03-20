@@ -31,16 +31,23 @@ async function processFile(filePath: string, file: string) {
 
   const raw = await fs.promises.readFile(filePath)
   const text = raw.toString('utf-8')
+  const finalOutputFolder = outputPath.split('/').slice(-3, -1).join('/')
 
-  const xmlLevel = convertTextToXML(text)
-  const logMessage = `${new Date()} - ${file} - File created.`
+  let logMessage = `${new Date()} - ${file} - File created.`
+  try {
+    const xmlLevel = convertTextToXML(text)
+    await fs.promises.writeFile(path.posix.join(outputFolder, finalOutputFolder, file.split('.').slice(0, -1).join('.') + '.xml'), xmlLevel.trim())
+  } catch (e) {
+    if (e instanceof Error) {
+      logMessage = `${new Date()} - ${file} - Error: ${e.message}`
+    } else if (typeof e === 'string') {
+      logMessage = `${new Date()} - ${file} - Error: ${e}`
+    }
+  }
 
   console.log(logMessage)
 
-  const finalOutputFolder = outputPath.split('/').slice(-3, -1).join('/')
-
   await fs.promises.appendFile(path.posix.join(outputFolder, finalOutputFolder, `_log_${dateTimeString}.txt`), logMessage + '\n')
-  await fs.promises.writeFile(path.posix.join(outputFolder, finalOutputFolder, file.split('.').slice(0, -1).join('.') + '.xml'), xmlLevel.trim())
 }
 
 main()

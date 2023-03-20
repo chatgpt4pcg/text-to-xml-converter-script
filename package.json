@@ -13,7 +13,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"chatgpt4pcg": "^1.1.0",
+		"chatgpt4pcg": "^1.1.1",
 		"minimist": "^1.2.8",
 		"typescript": "^5.0.2"
 	},
