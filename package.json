@@ -1,0 +1,28 @@
+{
+	"name": "text-to-xml-converter-script",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "npm run build && node build/index.js",
+		"start:dev": "npx nodemon",
+		"build": "rimraf ./build && tsc",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"chatgpt4pcg": "^1.1.0",
+		"minimist": "^1.2.8",
+		"typescript": "^5.0.2"
+	},
+	"devDependencies": {
+		"@types/minimist": "^1.2.2",
+		"@types/node": "^18.15.3",
+		"eslint": "^8.36.0",
+		"nodemon": "^2.0.21",
+		"rimraf": "^4.4.0",
+		"ts-node": "^10.9.1"
+	}
+}
