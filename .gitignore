@@ -176,7 +176,5 @@ dist
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,node
 
-level/*
-intermediate/*
-*.traineddata
 build/*
+competition/*

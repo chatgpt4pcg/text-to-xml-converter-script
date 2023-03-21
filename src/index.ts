@@ -1,12 +1,12 @@
-import { directoryWalk, replicateFolderStructure } from './file-utils';
+import { appendLog, createLogFolder, createOutputFolder, listAllDirs, listAllFiles, listCharactersDirs } from './file-utils';
 
-import { convertTextToXML } from 'chatgpt4pcg'
+import { convertTextToXML } from 'chatgpt4pcg';
 import fs from 'fs'
 import parseArgs from 'minimist'
 import path from 'path'
 
-const outputFolder = path.posix.resolve('./level/');
-const dateTimeString = new Date().toISOString().replaceAll(':', '_')
+const STAGE = 'intermediate'
+const OUTPUT_NAME = 'levels'
 
 async function main() {
   const args = parseArgs(process.argv.slice(2))
@@ -17,37 +17,59 @@ async function main() {
 
   const sourceFolder = argv + '/'
   const sFolder = path.posix.resolve(sourceFolder)
-  await directoryWalk(sFolder, processFile)
-}
 
-async function processFile(filePath: string, file: string) {
-  const outputPath = filePath.replace(file, '').split('/').slice(2).join('/');
+  const logFolderPath = await createLogFolder(sFolder)
+  const teamFolders = await listAllDirs(sFolder)
+  for (const team of teamFolders) {
+    const teamLog = `[${new Date().toISOString().replaceAll(':', '_')}] Processing - team: ${team}`
+    await appendLog(logFolderPath, teamLog)
+    const path1 = path.posix.join(sFolder, team)
+    let characters = [] as string[]
+    try {
+      characters = await listCharactersDirs(path1, STAGE)
+    } catch (e) {
+      const teamLog = `[${new Date().toISOString().replaceAll(':', '_')}] Processing - team: ${team} - Failed`
+      if (e instanceof Error) {
+        await appendLog(logFolderPath, `${teamLog} - ${e.message.toString()}`)
+      } else if (typeof e === 'string') {
+        await appendLog(logFolderPath, `${teamLog} - ${e}`)
+      }
+    }
 
-  if (file.indexOf('.txt') === -1 && file.indexOf('.md') === -1) {
-    return
-  }
-
-  await replicateFolderStructure(outputPath, outputFolder)
-
-  const raw = await fs.promises.readFile(filePath)
-  const text = raw.toString('utf-8')
-  const finalOutputFolder = outputPath.split('/').slice(-3, -1).join('/')
-
-  let logMessage = `${new Date()} - ${file} - File created.`
-  try {
-    const xmlLevel = convertTextToXML(text)
-    await fs.promises.writeFile(path.posix.join(outputFolder, finalOutputFolder, file.split('.').slice(0, -1).join('.') + '.xml'), xmlLevel.trim())
-  } catch (e) {
-    if (e instanceof Error) {
-      logMessage = `${new Date()} - ${file} - Error: ${e.message}`
-    } else if (typeof e === 'string') {
-      logMessage = `${new Date()} - ${file} - Error: ${e}`
+    if (characters.length !== 0) {
+      for (const character of characters) {
+        const characterLog = `[${new Date().toISOString().replaceAll(':', '_')}] Processing - team: ${team} - character: ${character}`
+        await appendLog(logFolderPath, characterLog)
+        const path2 = path.posix.join(path1, STAGE, character)
+        const trials = await listAllFiles(path2)
+        if (trials.length !== 0) {
+          for (const trial of trials) {
+            const trialLog = `[${new Date().toISOString().replaceAll(':', '_')}] Processing - team: ${team} - character: ${character} - trial: ${trial}`
+            await appendLog(logFolderPath, trialLog)
+            const filePath = path.posix.join(path2, trial)
+            const intermediateFileContent = await fs.promises.readFile(filePath)
+            const rawResult = intermediateFileContent.toString('utf-8')
+            try {
+              const fileLog = `[${new Date().toISOString().replaceAll(':', '_')}] Processing - team: ${team} - character: ${character} - trial: ${trial} - Successed`
+              const xmlFileResult = convertTextToXML(rawResult)
+              const outputPath = await createOutputFolder(path2, OUTPUT_NAME, STAGE)
+              const finalFileName = trial.split('.').slice(0, -1).join('.')
+              const outputFile = path.posix.join(outputPath, `${finalFileName}.xml`)
+              await fs.promises.writeFile(outputFile, xmlFileResult)
+              await appendLog(logFolderPath, fileLog)
+            } catch (e) {
+              const fileLog = `[${new Date().toISOString().replaceAll(':', '_')}] Processing - team: ${team} - character: ${character} - trial: ${trial} - Failed`
+              if (e instanceof Error) {
+                await appendLog(logFolderPath, `${fileLog} - ${e.message.toString()}`)
+              } else if (typeof e === 'string') {
+                await appendLog(logFolderPath, `${fileLog} - ${e}`)
+              }
+            }
+          }
+        }
+      }
     }
   }
-
-  console.log(logMessage)
-
-  await fs.promises.appendFile(path.posix.join(outputFolder, finalOutputFolder, `_log_${dateTimeString}.txt`), logMessage + '\n')
 }
 
 main()
