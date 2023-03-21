@@ -23,13 +23,13 @@ Please ensure that the source folder is in the same folder as the script and has
 |   ├── <STAGE>
 │   │    └── <CHARACTER>
 │   │       ├── <TRIAL_NUMBER>.jpg
-│   │       ├── <TRIAL_NUMBER>.png
-│   │       └── <TRIAL_NUMBER>.jpg
+│   │       ├── <TRIAL_NUMBER>.jpg
+│   │       └── <TRIAL_NUMBER>.png
 │   └── <STAGE>
 │        └── <CHARACTER>
-│           ├── <TRIAL_NUMBER>.png
-│           ├── <TRIAL_NUMBER>.png
-│           └── <TRIAL_NUMBER>.png
+│           ├── <TRIAL_NUMBER>.txt
+│           ├── <TRIAL_NUMBER>.txt
+│           └── <TRIAL_NUMBER>.txt
 └── <TEAM_NAME>
     ├── <STAGE>
     │    └── <CHARACTER>
@@ -38,7 +38,7 @@ Please ensure that the source folder is in the same folder as the script and has
     │       └── <TRIAL_NUMBER>.jpg
     └── <STAGE>
          └── <CHARACTER>
-            ├── <TRIAL_NUMBER>.png
-            ├── <TRIAL_NUMBER>.png
-            └── <TRIAL_NUMBER>.png
+            ├── <TRIAL_NUMBER>.txt
+            ├── <TRIAL_NUMBER>.txt
+            └── <TRIAL_NUMBER>.txt
 ```
