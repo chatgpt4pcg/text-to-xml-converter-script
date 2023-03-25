@@ -1,4 +1,4 @@
-# Text-to-XML converter Script
+# Text-to-XML Conversion Script
 
 This repository contains a script for converting text file into XML level file that can be loaded into Science Birds
 
