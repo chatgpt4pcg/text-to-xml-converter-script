@@ -73,7 +73,7 @@ export async function createLogFolder(sourceFolder: string) {
 
 export async function appendLog(logFolderPath: string, log: string) {
   console.log(log)
-  const logFilePath = path.posix.join(logFolderPath, `code_log_${START_TIME}.txt`)
+  const logFilePath = path.posix.join(logFolderPath, `xml_log_${START_TIME}.txt`)
   if (!fs.existsSync(logFilePath)) {
     await fs.promises.writeFile(logFilePath, '')
   }
