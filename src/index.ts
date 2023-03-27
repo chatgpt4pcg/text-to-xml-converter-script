@@ -76,11 +76,10 @@ async function processTrialFile(team: string, character: string, trial: string, 
   await appendLog(logFolderPath, CURRENT_STAGE, trialLog);
 
   const trialFilePath = path.posix.join(characterFolderPath, trial);
-  const intermediateFileContent = await fs.promises.readFile(trialFilePath);
-  const intermediateResult = intermediateFileContent.toString('utf-8');
+  const intermediateFileContent = await fs.promises.readFile(trialFilePath, 'utf-8');
 
   try {
-    const xmlResult = convertTextToXML(intermediateResult);
+    const xmlResult = convertTextToXML(intermediateFileContent);
 
     const outputPath = await createOutputFolder(characterFolderPath, CURRENT_STAGE, INPUT_STAGE);
     const finalFileName = trial.split('.').slice(0, -1).join('.');
