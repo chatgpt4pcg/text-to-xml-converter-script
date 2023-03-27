@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@types/node': ^18.15.10
   chatgpt4pcg: ^1.2.0
-  chatgpt4pcg-node: ^1.0.0
+  chatgpt4pcg-node: ^1.0.1
   eslint: ^8.36.0
   nodemon: ^2.0.22
   rimraf: ^4.4.1
@@ -12,7 +12,7 @@ specifiers:
 
 dependencies:
   chatgpt4pcg: 1.2.0
-  chatgpt4pcg-node: 1.0.0
+  chatgpt4pcg-node: 1.0.1
   typescript: 5.0.2
 
 devDependencies:
@@ -251,8 +251,8 @@ packages:
       supports-color: 7.2.0
     dev: true
 
-  /chatgpt4pcg-node/1.0.0:
-    resolution: {integrity: sha512-qkOjFiGPZ9BulAAd3v8xXaRLRQ5M0yp6G0QhDDHJZeuozym8sEduvuDbrDO263Fxpv7tpf4+QKeYvxb9vQmMvw==}
+  /chatgpt4pcg-node/1.0.1:
+    resolution: {integrity: sha512-yBw03Is5LGOApw481wFNZ/gZ8rna+OSAORaj0faKrFrmgoTQukh8S4paReJMhV2eCuufgWu7ofbcPfB0dagwng==}
     dependencies:
       minimist: 1.2.8
     dev: false
