@@ -13,7 +13,9 @@ To use this script, you must have <a href="https://nodejs.org/en/" target="_new"
 ## Usage
 
 1. Run the script using the command `npm start -s="<SOURCE_FOLDER>"`. For example, `npm start -s "./competition"`.
-2. The script will output the XML file in the `<SOURCE_FOLDER>/<TEAM_NAME>/levels/<TARGET_CHARACTER>` folder, which has the same structure as the source folder. The file `xml_log_<DATE_TIME>.txt` will be created in the `<SOURCE_FOLDER>/logs` folder.
+2. The script will output the XML file in the `<SOURCE_FOLDER>/<TEAM_NAME>/levels/<CHARACTER>` folder, which has the same structure as the source folder. The file `xml_log_<DATE_TIME>.txt` will be created in the `<SOURCE_FOLDER>/logs` folder.
+
+Please note that `<STAGE>` can be `raw`, `intermediate`, `levels`, `images`, `stability`, or `similarity`. `<CHARACTER>` can be `A`, `B`, `C`, ..., `Z`.
 
 Please ensure that the source folder has the following structure:
 
