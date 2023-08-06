@@ -81,13 +81,17 @@ async function processTrialFile(team: string, character: string, trial: string, 
   try {
     const xmlResult = convertTextToXML(intermediateFileContent);
 
-    const outputPath = await createOutputFolder(characterFolderPath, CURRENT_STAGE, INPUT_STAGE);
-    const finalFileName = trial.split('.').slice(0, -1).join('.');
-    const outputFile = path.posix.join(outputPath, `${finalFileName}.xml`);
-    await fs.promises.writeFile(outputFile, xmlResult);
+    try {
+      const outputPath = await createOutputFolder(characterFolderPath, CURRENT_STAGE, INPUT_STAGE);
+      const finalFileName = trial.split('.').slice(0, -1).join('.');
+      const outputFile = path.posix.join(outputPath, `${finalFileName}.xml`);
+      await fs.promises.writeFile(outputFile, xmlResult);
 
-    const fileLog = `[${new Date().toISOString()}] Processing - team: ${team} - character: ${character} - trial: ${trial} - Succeed`;
-    await appendLog(logFolderPath, CURRENT_STAGE, fileLog);
+      const fileLog = `[${new Date().toISOString()}] Processing - team: ${team} - character: ${character} - trial: ${trial} - Succeed`;
+      await appendLog(logFolderPath, CURRENT_STAGE, fileLog);
+    } catch (e) {
+      await processTrialFile(team, character, trial, logFolderPath, characterFolderPath)
+    }
   } catch (e) {
     const fileLog = `[${new Date().toISOString()}] Processing - team: ${team} - character: ${character} - trial: ${trial} - Failed`;
     if (e instanceof Error) {
