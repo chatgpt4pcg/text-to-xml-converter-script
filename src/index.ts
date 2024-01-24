@@ -6,7 +6,7 @@ import path from 'path'
 
 const INPUT_STAGE: STAGE = 'intermediate'
 const CURRENT_STAGE: STAGE = 'levels'
-const FUNCTION_PREFIX = "ab_drop(" // Change this if needed
+const FUNCTION_PREFIX = "drop_block(" // Change this if needed
 
 async function main() {
   let sourceFolder = ''
