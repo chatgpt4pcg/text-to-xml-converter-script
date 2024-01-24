@@ -1,11 +1,12 @@
-import { appendLog, createLogFolder, createOutputFolder, listAllDirs, listAllFiles, listCharactersDirs, parseSourceFolderArgument } from 'chatgpt4pcg-node';
+import { STAGE, appendLog, createLogFolder, createOutputFolder, listAllDirs, listAllFiles, listCharactersDirs, parseSourceFolderArgument } from 'chatgpt4pcg-node';
 
 import { convertTextToXML } from 'chatgpt4pcg';
 import fs from 'fs'
 import path from 'path'
 
-const INPUT_STAGE = 'intermediate'
-const CURRENT_STAGE = 'levels'
+const INPUT_STAGE: STAGE = 'intermediate'
+const CURRENT_STAGE: STAGE = 'levels'
+const FUNCTION_PREFIX = "ab_drop(" // Change this if needed
 
 async function main() {
   let sourceFolder = ''
@@ -79,7 +80,7 @@ async function processTrialFile(team: string, character: string, trial: string, 
   const intermediateFileContent = await fs.promises.readFile(trialFilePath, 'utf-8');
 
   try {
-    const xmlResult = convertTextToXML(intermediateFileContent);
+    const xmlResult = convertTextToXML(intermediateFileContent, FUNCTION_PREFIX);
 
     try {
       const outputPath = await createOutputFolder(characterFolderPath, CURRENT_STAGE, INPUT_STAGE);
