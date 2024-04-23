@@ -73,6 +73,13 @@ competition
             └── team2_B_3.txt
 ```
 
+## FAQ
+
+<details>
+  <summary>Encountering the error "Insufficient parameters to work with" when running the script despite already providing arguments.</summary>
+    - Try upgrading your package manager, such as `npm`, or changing the package manager, which may help resolve the issue.
+</details>
+
 ## Contributing
 
 If you would like to contribute to this project, please fork this repository and submit a pull request. Please ensure that your code is well documented and that you have tested your code before submitting a pull request.
